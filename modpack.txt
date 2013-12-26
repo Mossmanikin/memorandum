@@ -1,0 +1,5 @@
+The presence of this file indicates that the current folder is a modpack.
+
+
+You don't have to rename this folder.
+But you can rename it as long as none of the subfolders (or any other mods you use) have the chosen name and you don't use illegal characters.
