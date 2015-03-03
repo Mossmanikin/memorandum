@@ -61,6 +61,9 @@ minetest.register_node("memorandum:letter_empty", {
 		meta:set_string("infotext", info..'"')
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
+		if not (fields.text and fields.signed) then
+			return
+		end
 		local meta = minetest.get_meta(pos)
 		fields.text = fields.text
 		fields.signed = fields.signed
