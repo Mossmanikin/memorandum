@@ -13,7 +13,7 @@ local wdir = { 8, 17, 6, 15 } -- wall direction
 -- For compatibility with older stuff
 minetest.register_alias("memorandum:letter_empty_2"  ,"memorandum:letter_empty"  )
 minetest.register_alias("memorandum:letter_written_2","memorandum:letter_written")
-			
+
 minetest.register_craftitem(":default:paper", {
 	description = "Paper",
 	inventory_image = "default_paper.png",
@@ -52,7 +52,7 @@ minetest.register_node("memorandum:letter_empty", {
 	on_construct = function(pos)
 		local meta = minetest.get_meta(pos)
 		meta:set_string(
-					"formspec", 
+					"formspec",
 					"size[10,7]"..
 					"field[1,1;8.5,1;text; Write a Letter;${text}]"..
 					"field[1,3;4.25,1;signed; Sign Letter (optional);${signed}]"..
@@ -61,6 +61,9 @@ minetest.register_node("memorandum:letter_empty", {
 		meta:set_string("infotext", info..'"')
 	end,
 	on_receive_fields = function(pos, formname, fields, sender)
+		if fields.quit then
+			return
+		end
 		local meta = minetest.get_meta(pos)
 		fields.text = fields.text
 		fields.signed = fields.signed
@@ -227,14 +230,14 @@ minetest.register_tool("memorandum:eraser", {
 			if string.find(node.name, "memorandum:letter_written") then
 				if signer == player or signer == "" then
 					meta:set_string(
-						"formspec", 
+						"formspec",
 						"size[10,7]"..
 						"field[1,1;8.5,1;text; Edit Text;${text}]"..
 						"field[1,3;4.25,1;signed; Edit Signature;${signed}]"..
 						"button_exit[0.75,5;4.25,1;text,signed;Done]"
 					)
 					if not minetest.setting_getbool("creative_mode") then
-						return eraser_wear(itemstack, user, pointed_thing, 30)	
+						return eraser_wear(itemstack, user, pointed_thing, 30)
 					else
 						return {name="memorandum:eraser", count=1, wear=0, metadata=""}
 					end
